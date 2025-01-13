@@ -1,13 +1,19 @@
 package leetcode_ans
 
-class Solution {
-    public boolean isPalindrome(int x) {
-        String str = String.valueOf(x);
-        int n = str.length();
-        for(int i = 0; i < n/2; i++) {
-            if (str.charAt(i) != str.charAt(n - i - 1))
-                return false;
-        }
-        return true;
+func isPalindrome(x int) bool {
+    if (x < 0) {
+        return false
     }
+
+    return x == reverseNum(x)
+}
+
+func reverseNum(x int) int {
+    res := 0
+    for x > 0 {
+        res *= 10
+        res += x % 10
+        x /= 10
+    }
+    return res
 }
