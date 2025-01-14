@@ -36,19 +36,3 @@ func threeSum(nums []int) [][]int {
 	}
     return res
 }
-
-func contain(a [][]int, b []int) bool {
-	for _, array := range a {
-		f := true
-		for i := 0; i < 3; i++ {
-			if array[i] != b[i] {
-				f = false
-                break
-			}
-		}
-		if f {
-			return true
-		}
-	}
-	return false
-}
