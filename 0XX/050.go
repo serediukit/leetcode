@@ -1,16 +1,22 @@
 package leetcode_ans
 
 func myPow(x float64, n int) float64 {
-    if x == 0 || x == 1 {
-        return x
+    var isMinus bool = n < 0
+
+    if isMinus {
+        n = -n
     }
-    var isMinus bool
-    n, isMinus = abs(n)
 
     var res float64 = 1
 
-    for i := 1; i <= n; i++ {
-        res *= x
+    for n > 0 {
+        if n % 2 == 0 {
+            n /= 2
+            x *= x
+        } else {
+            n--
+            res *= x
+        }
     }
 
     if isMinus {
