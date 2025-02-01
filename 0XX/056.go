@@ -5,14 +5,16 @@ func merge(intervals [][]int) [][]int {
 		return intervals
 	}
 
-	for i := 0; i < len(intervals); i++ {
-		for j := i + 1; j < len(intervals); j++ {
-			mergedArray, hasMerge := mergeTwoIntervals(intervals[i], intervals[j])
-			if hasMerge {
-				intervals[i] = mergedArray
-				intervals = append(intervals[:j], intervals[j+1:]...)
-				return merge(intervals)
-			}
+	sort.Slice(intervals, func(a, b int) bool {
+		return (intervals[a][0] < intervals[b][0]) || ((intervals[a][0] == intervals[b][0]) && (intervals[a][1] < intervals[b][1]))
+	})
+
+	for i := 1; i < len(intervals); i++ {
+		mergedArray, hasMerge := mergeTwoIntervals(intervals[i-1], intervals[i])
+		if hasMerge {
+			intervals[i-1] = mergedArray
+			intervals = append(intervals[:i], intervals[i+1:]...)
+			i--
 		}
 	}
 
