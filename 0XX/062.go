@@ -1,4 +1,4 @@
-package leetcode_and
+package leetcode_ans
 
 func uniquePaths(m int, n int) int {
     dp := make([][]int, m)
