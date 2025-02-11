@@ -1,31 +1,20 @@
-package leetcode_ans
-
 func minPathSum(grid [][]int) int {
-    m := len(grid)
-    n := len(grid[0])
-
-    dp := make([][]int, m)
-
-    for i := range m {
-        dp[i] = make([]int, n)
-    }
-
-    dp[0][0] = grid[0][0]
-
-    for j := 1; j < n; j++ {
-        dp[0][j] = dp[0][j-1] + grid[0][j]
-    }
-
-
-    for i := 1; i < m; i++ {
-        dp[i][0] = dp[i-1][0] + grid[i][0]
-
-        for j := 1; j < n; j++ {
-            dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
+    for i := 0; i < len(grid); i++{
+        for j := 0; j < len(grid[i]); j++{
+            left := math.MaxInt64
+            up := math.MaxInt64
+            if j - 1 >= 0 {
+                left = grid[i][j-1]
+            }
+            if i - 1 >= 0{
+                up = grid[i-1][j]
+            }
+            if up != math.MaxInt64 || left != math.MaxInt64{
+                grid[i][j] += min(up, left)
+            }
         }
     }
-
-    return dp[m-1][n-1]
+    return grid[len(grid)-1][len(grid[0])-1]
 }
 
 func min(a, b int) int {
