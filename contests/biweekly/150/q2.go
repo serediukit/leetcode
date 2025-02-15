@@ -44,4 +44,4 @@ func separateSquares(squares [][]int) float64 {
 	}
 
 	return (low + high) / 2
-}©leetcode
+}
