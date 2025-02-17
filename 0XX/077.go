@@ -10,9 +10,7 @@ func combine(n int, k int) [][]int {
 
 func backtrack(res *[][]int, temp []int, num, k, n int) {
     if len(temp) == k {
-        tempRes := make([]int, len(temp))
-        copy(tempRes, temp)
-        *res = append(*res, tempRes)
+        *res = append(*res, append([]int{}, temp...))
         return
     }
     for i := num; i <= n; i++ {
