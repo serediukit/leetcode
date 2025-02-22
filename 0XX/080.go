@@ -1,17 +1,15 @@
 package leetcode_ans
 
 func removeDuplicates(nums []int) int {
-    j := 1
-    count := 1
+    l := len(nums)
+    if l < 2 {
+        return l
+    }
 
-    for i := 1; i < len(nums); i++ {
-        if nums[i] == nums[i-1] {
-            count++
-        } else {
-            count = 1
-        }
+    j := 2
 
-        if count <= 2 {
+    for i := 2; i < l; i++ {
+        if nums[i] != nums[j-1] || nums[j-1] != nums[j-2] {
             nums[j] = nums[i]
             j++
         }
