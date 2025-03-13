@@ -20,10 +20,11 @@ func minZeroArray(nums []int, queries [][]int) int {
                     }
                 }
             }
-        } else {
+            k++
+        }
+        if cntZeroes == len(nums) {
             return k
         }
-        k++
     }
     return -1
 }
