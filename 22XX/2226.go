@@ -7,14 +7,9 @@ func maximumCandies(candies []int, k int64) int {
     }
 
     left, right := 0, int(sum / k)
-    res := 0
 
-    for left <= right {
-        mid := (left + right) / 2
-        if mid == 0 {
-            left++
-            continue
-        }
+    for left < right {
+        mid := (left + right) / 2 + 1
 
         var kCount int64
 
@@ -23,12 +18,11 @@ func maximumCandies(candies []int, k int64) int {
         }
 
         if kCount >= k {
-            left = mid + 1
-            res = mid
+            left = mid
         } else {
             right = mid - 1
         }
     }
 
-    return res
+    return left
 }
