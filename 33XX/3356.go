@@ -1,30 +1,23 @@
 package leetcode_ans
 
 func minZeroArray(nums []int, queries [][]int) int {
-    cntZeroes := 0
-    for _, n := range nums {
-        if n == 0 {
-            cntZeroes++
-        }
-    }
-    k := 0
-    for _, q := range queries {
-        if cntZeroes < len(nums) {
-            for i := q[0]; i <= q[1]; i++ {
-                if nums[i] != 0 {
-                    if nums[i] <= q[2] {
-                        nums[i] = 0
-                        cntZeroes++
-                    } else {
-                        nums[i] -= q[2]
-                    }
-                }
+    n := len(nums)
+    sum, k := 0, 0
+    cnt := make([]int, n+1)
+    for i := 0; i < n; i++ {
+        for sum+cnt[i] < nums[i] {
+            if k == len(queries) {
+                return -1
             }
+            l, r, val := queries[k][0], queries[k][1], queries[k][2]
             k++
+            if r < i {
+                continue
+            }
+            cnt[max(l, i)] += val
+            cnt[r+1] -= val
         }
-        if cntZeroes == len(nums) {
-            return k
-        }
+        sum += cnt[i]
     }
-    return -1
+    return k
 }
