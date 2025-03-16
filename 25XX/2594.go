@@ -1,8 +1,7 @@
 package leetcode_ans
 
 func repairCars(ranks []int, cars int) int64 {
-    var left, right int64 = 0, 1_000_000_000_000_000
-
+    var left, right int64 = 0, int64(slices.Max(ranks)) * int64(cars) * int64(cars)
     for left < right {
         mid := (left + right) / 2
 
