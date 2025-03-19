@@ -12,7 +12,7 @@ func minOperations(nums []int) int {
         }
     }
 
-    if nums[len(nums)-1] == 0 || nums[len(nums)-2] == 0 {
+    if nums[len(nums)-1] + nums[len(nums)-2] != 2 {
         return -1
     }
 
