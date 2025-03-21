@@ -1,36 +1,44 @@
 package leetcode_ans
 
 func findAllRecipes(recipes []string, ingredients [][]string, supplies []string) []string {
-	canBeCooked := make(map[string]bool)
+	recipeToIngredients := make(map[string][]string)
+	visited := make(map[string]int)
+	res := make([]string, 0, len(recipes))
 
-	var checkCooking func(string, []string)
-	checkCooking = func(recipe string, ingredients []string) {
-		canCook := true
-		for _, ingredient := range ingredients {
-			if !slices.Contains(supplies, ingredient) {
-				_, ok := canBeCooked[ingredient]
-				if !ok {
-					canCook = false
-					break
-				}
+	for i, recipe := range recipes {
+		recipeToIngredients[recipe] = ingredients[i]
+	}
+
+	var canCooked func(string) bool
+	canCooked = func(recipe string) bool {
+		if val, exists := visited[recipe]; exists {
+			return val == 1
+		}
+
+		if slices.Contains(supplies, recipe) {
+			return true
+		}
+
+		if _, exists := recipeToIngredients[recipe]; !exists {
+			return false
+		}
+
+		visited[recipe] = 0
+
+		for _, ingredient := range recipeToIngredients[recipe] {
+			if !canCooked(ingredient) {
+				visited[recipe] = -1
+				return false
 			}
 		}
-		if canCook {
-			canBeCooked[recipe] = true
-		}
+
+		visited[recipe] = 1
+		res = append(res, recipe)
+		return true
 	}
 
-	for i := 0; i < len(recipes); i++ {
-		if _, cooked := canBeCooked[recipes[i]]; !cooked {
-			checkCooking(recipes[i], ingredients[i])
-		}
-	}
-
-	res := make([]string, len(canBeCooked))
-	index := 0
-	for recipe := range canBeCooked {
-		res[index] = recipe
-		index++
+	for _, recipe := range recipes {
+		canCooked(recipe)
 	}
 
 	return res
