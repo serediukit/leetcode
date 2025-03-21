@@ -3,26 +3,26 @@ package leetcode_ans
 func findAllRecipes(recipes []string, ingredients [][]string, supplies []string) []string {
 	canBeCooked := make(map[string]bool)
 
-	countCooked := 1
-	for countCooked > 0 {
-		countCooked = 0
-		for i := 0; i < len(recipes); i++ {
-			if _, cooked := canBeCooked[recipes[i]]; !cooked {
-				canCook := true
-				for _, ingredient := range ingredients[i] {
-					if !slices.Contains(supplies, ingredient) {
-						_, ok := canBeCooked[ingredient]
-						if !ok {
-							canCook = false
-							break
-						}
-					}
-				}
-				if canCook {
-					canBeCooked[recipes[i]] = true
-					countCooked++
+	var checkCooking func(string, []string)
+	checkCooking = func(recipe string, ingredients []string) {
+		canCook := true
+		for _, ingredient := range ingredients {
+			if !slices.Contains(supplies, ingredient) {
+				_, ok := canBeCooked[ingredient]
+				if !ok {
+					canCook = false
+					break
 				}
 			}
+		}
+		if canCook {
+			canBeCooked[recipe] = true
+		}
+	}
+
+	for i := 0; i < len(recipes); i++ {
+		if _, cooked := canBeCooked[recipes[i]]; !cooked {
+			checkCooking(recipes[i], ingredients[i])
 		}
 	}
 
