@@ -1,6 +1,14 @@
 package biweekly
 
-func maxActiveSectionsAfterTrade(s string) int {
+func maxActiveSectionsAfterTrade(s string, queries [][]int) []int {
+	ans := make([]int, len(queries))
+	for i, q := range queries {
+		ans[i] = maxActiveSectionsAfterTradeQuery(s[q[0]:q[1]+1]) + strings.Count(s[:q[0]], "1") + strings.Count(s[q[1]+1:], "1")
+	}
+	return ans
+}
+
+func maxActiveSectionsAfterTradeQuery(s string) int {
 	n := len(s)
 	maxC := strings.Count(s, "1")
 
