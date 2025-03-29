@@ -1,6 +1,7 @@
 package biweekly
 
-s = "1" + s + "1"
+func maxActiveSections(s string) int {
+	s = "1" + s + "1"
 	count := make([]int, 0)
 	cMax := strings.Count(s, "1")
 
@@ -44,3 +45,4 @@ s = "1" + s + "1"
 	}
 
 	return cMax - 2
+}
