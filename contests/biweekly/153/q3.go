@@ -38,4 +38,4 @@ func minimumCost(nums []int, cost []int, k int) int64 {
     }
 
     return minCost
-}©leetcode
+}
